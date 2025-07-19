@@ -4,8 +4,8 @@ import torch
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 
 # Load TrOCR model
-processor = TrOCRProcessor.from_pretrained("YOUR_FINE_TUNED_MODEL_PATH")
-model = VisionEncoderDecoderModel.from_pretrained("YOUR_FINE_TUNED_MODEL_PATH")
+processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
+model = VisionEncoderDecoderModel.from_pretrained("popPrasanna/trocr_handwritten")
 model.eval()
 
 # Use GPU if available
