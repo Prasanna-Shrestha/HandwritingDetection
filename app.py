@@ -1,19 +1,13 @@
-from fastapi import FastAPI, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
+import gradio as gr
 from predict import predict_from_image
 
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], allow_credentials=True,
-    allow_methods=["*"], allow_headers=["*"],
-)
+def ocr_interface(image):
+    # image is a PIL Image from Gradio by default
+    import io
+    buf = io.BytesIO()
+    image.save(buf, format='PNG')
+    byte_im = buf.getvalue()
+    return predict_from_image(byte_im)
 
-@app.post("/predict")
-async def predict(file: UploadFile = File(...)):
-    image_bytes = await file.read()
-    try:
-        text = predict_from_image(image_bytes)
-        return {"text": text}
-    except Exception as e:
-        return {"error": str(e)}
+iface = gr.Interface(fn=ocr_interface, inputs=gr.Image(type="pil"), outputs="text")
+iface.launch()

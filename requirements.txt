@@ -1,8 +1,8 @@
 fastapi
-uvicorn[standard]
-pillow
-torch
+uvicorn
 transformers
+torch
 numpy
 opencv-python-headless
+pillow
 pytesseract
